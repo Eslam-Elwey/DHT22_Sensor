@@ -53,9 +53,9 @@ static void DHT22_Send_Request (void)
 
 void DHT22_Init (void) 
 {
-	DHT22_Send_Request() ;
-	
 	Timer1_Init(TIMER1_NORMAL_MODE,TIMER1_PRESCALER_CLK_8);
+	
+	DHT22_Send_Request() ;
 	
 	Timer1_Set_ICU_Call_Back(&ICU_Func) ;
 }
@@ -121,16 +121,12 @@ static void DHT22_Receive_data (void)
 		current_elemrnt = 0 ;
 		current_bit = 7 ;
 		
-		humdity_val = data_handle_arr[1] + (u16)data_handle_arr[0] * 10 + (u16)data_handle_arr[0] *256- (u16)data_handle_arr[0] *10 ;
-		temp_val = data_handle_arr[3]  + (u16)data_handle_arr[2] * 10 + (u16)data_handle_arr[2] * 256- (u16)data_handle_arr[2] *10 ;
+		humdity_val = data_handle_arr[1] + (u16)data_handle_arr[0] *256 ;
+		temp_val = data_handle_arr[3]  + (u16)data_handle_arr[2] * 256;
 		
 	
 		calc_crc = humdity_val + temp_val ; 
 		
-	
-	
-
-		calc_crc = 0 ;
 		DHT22_Send_Request() ;
 	}
 }
